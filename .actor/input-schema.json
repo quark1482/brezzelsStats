@@ -1,0 +1,130 @@
+{
+    "title": "brezzelsStats parameters",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "google_auth": {
+            "title": "👀 Google credentials",
+            "description": "Place here the full contents of the credentials JSON key file",
+            "type": "object",
+            "editor": "json",
+            "nullable": false,
+            "sectionCaption": "🔐 Authorization"
+        },
+        "spreadsheet_id": {
+            "title": "🆔 Google spreadsheet id",
+            "description": "From the target spreadsheet URL: https://docs.google.com/spreadsheets/d/<copy this>/edit...",
+            "type": "string",
+            "editor": "textfield",
+            "nullable": false
+        },
+        "accounts_sheet_config": {
+            "title": "📊 Accounts sheet config",
+            "description": "Imported: instructions to grab the accounts from - overrides the next field",
+            "type": "object",
+            "prefill": {"sheet":"SheetName","startrow":1,"columns":{"account":"A","chatter":"B","manager":"C","email":"D","password":"E"},"filters":{"include":{"manager":["ManagerName"]},"exclude":{"chatter":["nicht besetzen","gelöscht","deleted"]}}},
+            "editor": "json",
+            "nullable": true
+        },
+        "brezzels_accounts": {
+            "title": "🥨 Brezzels accounts list",
+            "description": "Manual: Login details and share % for every account you want to include in the report",
+            "type": "array",
+            "prefill": [{"account":"jane_doe","identifier":"jdoe@mail.com","password":"53cr37","share":20}],
+            "editor": "json",
+            "uniqueItems": true,
+            "nullable": true
+        },
+        "report_from": {
+            "title": "🗓️ Report from",
+            "description": "Profits and other operations start at this date (previous values will be ignored)",
+            "type": "string",
+            "editor": "datepicker",
+            "default": "2026-01-01",
+            "sectionCaption": "📝 Additional options"
+        },
+        "dbg_only_validations": {
+            "title": "Only perform validations",
+            "description": "If enabled, just audits the input fields - the spreadsheet is not modified",
+            "type": "boolean",
+            "editor": "checkbox",
+            "default": false,
+            "sectionCaption": "🐜 Debug options"
+        },
+        "dbg_skip_sheets_config": {
+            "title": "Skip sheets configuration",
+            "description": "If enabled, omits the initial set up for the model accounts sheets",
+            "type": "boolean",
+            "editor": "checkbox",
+            "default": false
+        },
+        "dbg_skip_stats_grabbing": {
+            "title": "Skip stats grabbing",
+            "description": "If enabled, omits downloading the model accounts most recent earnings",
+            "type": "boolean",
+            "editor": "checkbox",
+            "default": false
+        },
+        "dbg_lazy_report": {
+            "title": "Lazy report",
+            "description": "If enabled, only updates the last period rows in each model account sheet",
+            "type": "boolean",
+            "editor": "checkbox",
+            "default": false
+        },
+        "dbg_request_cooldown": {
+            "title": "🧯 API request cooldown",
+            "description": "Time to wait after every API request (0: no waiting)",
+            "type": "integer",
+            "editor": "number",
+            "default": 1,
+            "minimum": 0,
+            "maximum": 5,
+            "unit": "sec"
+        },
+        "dbg_operation_threads": {
+            "title": "🤹 API operation threads",
+            "description": "Amount of simultaneous tasks for API operations (when applicable)",
+            "type": "integer",
+            "editor": "number",
+            "default": 2,
+            "minimum": 1,
+            "maximum": 8,
+            "unit": "threads"
+        },
+        "dbg_operation_lives": {
+            "title": "🆙 API operation lives",
+            "description": "Total tries for each API operation before failing (1: no retries)",
+            "type": "integer",
+            "editor": "number",
+            "default": 3,
+            "minimum": 1,
+            "maximum": 100,
+            "unit": "lives"
+        },
+        "dbg_backoff_factor": {
+            "title": "✳️ API backoff factor",
+            "description": "A multiplier for the number of seconds to wait for the next retry",
+            "type": "integer",
+            "editor": "number",
+            "default": 5,
+            "minimum": 0,
+            "maximum": 10,
+            "unit": "x"
+        },
+        "adv_proxy_usage": {
+            "title": "Proxy usage",
+            "description": "Proxies used to anonymize your requests",
+            "type": "object",
+            "editor": "proxy",
+            "prefill": {
+              "useApifyProxy": true
+            },
+            "sectionCaption": "⚠️ Advanced options"
+        }
+    },
+    "required": [
+        "google_auth",
+        "spreadsheet_id"
+    ]
+}

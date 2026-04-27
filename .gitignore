@@ -1,0 +1,5 @@
+docs
+storage
+node_modules
+.venv
+*.ini
